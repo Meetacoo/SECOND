@@ -1,0 +1,77 @@
+const MongoClient = require('mongodb').MongoClient;
+const url = 'mongodb://localhost:27017';
+const fs = require('fs');
+const uuidv1 = require('uuid/v1');
+
+const path = require('path');
+
+const filePath = path.normalize(url);
+function getRandom(min,max){
+	return Math.round(min + (max - min) * Math.random());
+}
+const dbName = 'marry';
+MongoClient.connect(url,{useNewUrlParser:true}, function(err, client) {
+	console.log("Connected successfully to server");
+
+	const db = client.db(dbName);
+	const col = db.collection('wish');
+})
+
+let add = (options,callback)=>{
+	fs.readFile(filePath,(err,data)=>{
+		if (!err) {
+			let obj = JSON.parse(data);
+			options.color = 'rgb(' + getRandom(0,255)+','+getRandom(0,255)+','+getRandom(0,255)+ ')';
+			options.id = uuidv1();
+			obj.push(options);
+			let str = JSON.stringify(obj);
+			fs.writeFile(filePath,str,(err)=>{
+				if (!err) {
+					callback(null,options);
+				} else {
+					callback(err);
+				}
+			})
+		} else {
+			callback(err);
+		}
+	})
+}
+
+let get = (callback) => {
+	fs.readFile(filePath,(err,data)=>{
+		if (!err) {
+			let obj = JSON.parse(data);
+			callback(null,obj);
+		} else {
+			callback(err);
+		}
+	});
+}
+
+let remove = (id,callback) => {
+	fs.readFile(filePath,(err,data)=>{
+		if (!err) {
+			let obj = JSON.parse(data);
+			let result = null;
+			let newObj = obj.filter((val)=>{
+				return val['id'] != id;
+			})
+			let str = JSON.stringify(newObj);
+			fs.writeFile(filePath,str,(err)=>{
+				if (!err) {
+					callback(null,newObj);
+				} else {
+					callback(err);
+				}
+			})
+		} else {
+			callback(err);
+		}
+	});
+}
+module.exports = {
+    get:get,
+    add:add,
+    remove:remove
+}
