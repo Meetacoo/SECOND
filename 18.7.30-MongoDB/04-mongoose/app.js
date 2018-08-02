@@ -24,8 +24,9 @@ db.once('open',()=>{
 	const User = mongoose.model('User',UserSchema);
 	// console.log(User);
 
-	// 4：
+	// 4：用 model 操作数据库
 
+	// CRUD
 	// 添加
 	/*const user = new User({name:'Jackson Yee',age:17,sex:'male'});
 	user.save((err,doc)=>{
