@@ -44,12 +44,31 @@ var UserSchema = new mongoose.Schema({
 UserSchema.methods.findMyBlogs = function(callback){
 	// console.log(this);
 	// console.log(this._id);
+	// console.log(this.model('Blog'));
 	// this是 UserModel的一个实例
 	// 在Model的原型上有Model.prototype.model()方法,该方法返回一个指定的Model   
-	/*this.model('Blog').find({author:this._id},(err,docs)=>{
+	this.model('Blog').find({author:this._id},(err,docs)=>{
 		callback(null,docs)
-	})*/
+	})
 }
 
+UserSchema.statics.findMyPhone = function(phone,callback){
+	// console.log(this); 
+	// console.log(this === UserModel);kbkbkb // true
+	// 这个 this 指 const UserModel = mongoose.model('User',UserSchema);
+	// console.log(this.model('User'));
+	// console.log(this.model('User') === this); // true
+	// console.log(this.model('Blog') === this); // false
+
+	// callback(null,docs);
+	this.findOne({phone:phone},(err,docs)=>{
+		if (!err) {
+			callback(null,docs);
+		} else {
+			callback('findMyPhone error', err);
+		}
+	})
+}
 const UserModel = mongoose.model('User',UserSchema);
+// console.log('UserModel::::',UserModel)
 module.exports = UserModel;

@@ -16,13 +16,13 @@ db.once('open',()=>{
 		name: 'JacksonYee',
 		age: 17,
 		sex: 'male',
-		phone: 17090266125,
+		phone: '15090266125',
 		locked: false,
 		createdAt: Date(),
 		friends: ['Meta','Yee']
 	},(err,docs)=>{
 		if (!err) {
-			console.log(docs)
+			console.log(docs);
 		} else {
 			console.log('insertMany error::',err.message);
 		}

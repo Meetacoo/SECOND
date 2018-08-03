@@ -23,10 +23,12 @@ var UserSchema = new mongoose.Schema({
 	},
 	phone: {
 		type:String,
-		validator:function(val){
-			return /1[358]\d{9}/.test(val)
-		},
-		message:'{VALUE} 不合法'
+		validate:{
+			validator:function(val){
+				return /1[358]\d{9}/.test(val)
+			},
+			message:'{VALUE} 不合法'
+		}
 	},
 	locked:{
 		type:Boolean

@@ -35,10 +35,17 @@ db.once('open',()=>{
 		}
 	})*/
 
-	UserModel.findOne({name:'JacksonYee'},(err,docs)=>{
+	/*UserModel.findOne({name:'JacksonYee'},(err,docs)=>{
 		docs.findMyBlogs((err,docs)=>{
 			console.log(docs);
 		})
+	})*/
+	UserModel.findMyPhone('15090266125',(err,docs)=>{
+		if (!err) {
+			console.log(docs);
+		} else {
+			console.log('findMyPhone error::',err);
+		}
 	})
 })
 
