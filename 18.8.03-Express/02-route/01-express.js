@@ -9,6 +9,23 @@ app.get('/', function(req, res){
 app.get('/abc', function(req, res){
 	res.send('get abc data ...');
 });
+// 匹配acd 和 abcd
+/*app.get('/ab?cd', function(req, res){
+	res.send('get ab?cd data ...');
+});*/
+// 匹配abcd 和 abbcd / abbbcd 等...
+/*app.get('/ab+cd', function(req, res){
+	res.send('get ab+cd data ...');
+});*/
+// 匹配abcd 和 abxcd / abRABDOCMcd / ab123cd 等...
+// 只要结尾是 cd 就行
+app.get('/ab*cd', function(req, res){
+	res.send('get ab*cd data ...');
+});
+// 匹配abe 和 abcde
+app.get('/ab(cd)?e', function(req, res){
+	res.send('get ab(cd)?e data ...');
+});
 app.post('/', function(req, res){
 	res.send('post data ...');
 });

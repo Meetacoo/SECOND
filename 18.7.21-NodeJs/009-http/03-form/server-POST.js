@@ -10,7 +10,7 @@ const server = http.createServer((req,res)=>{
 		let body = '';
 		req.on('data',(chunk)=>{
 			body += chunk;
-		})；
+		});
 		req.on('end',()=>{
 			let obj = querystring.parse(body);
 			console.log(obj);

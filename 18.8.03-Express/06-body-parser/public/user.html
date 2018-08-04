@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>index</title>
+</head>
+<body>
+	<button id="get">GET请求</button>
+	<button id="post">POST请求</button>
+	<button id="put">PUT请求</button>
+	<button id="delete">DELETE请求</button>
+</body>
+<script src="js/jquery-1.12.4.js"></script>
+<script>
+	$(function(){
+		$('#get').on('click',function(){
+			$.ajax({
+				url:'/user',
+				type:"GET"
+			})
+			.done(function(data){
+				// 与终端相连，返回到前端，data 为 res.sed 的内容
+				console.log('done',data);
+			})
+			.fail(function(){
+				console.log('fail');
+			})
+		});
+		$('#post').on('click',function(){
+			$.ajax({
+				url:'/user',
+				type:"POST",
+				data:{"name":"uasgdf","age":18}
+			})
+			.done(function(data){
+				console.log('done',data);
+			})
+			.fail(function(){
+				console.log('fail');
+			})
+		});
+		$('#put').on('click',function(){
+			$.ajax({
+				url:'/user',
+				type:"PUT"
+			})
+			.done(function(data){
+				console.log('done',data);
+			})
+			.fail(function(){
+				console.log('fail');
+			})
+		});
+		$('#delete').on('click',function(){
+			$.ajax({
+				url:'/user',
+				type:"DELETE"
+			})
+			.done(function(data){
+				console.log('done',data);
+			})
+			.fail(function(){
+				console.log('fail');
+			})
+		})
+	})
+</script>
+</html>
