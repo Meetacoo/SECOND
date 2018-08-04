@@ -19,6 +19,7 @@ app.delete('/', function(req, res){
 	res.send('delete data ...');
 });
 
+// 注意： 
 app.use(express.static('public'));
 
 app.listen(3000,'127.0.0.1',()=>{

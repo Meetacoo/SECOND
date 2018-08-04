@@ -1,18 +1,14 @@
-var express = require('express');
-var router = express.Router();
-// console.log(app);
-// 该路由使用的中间件
-router.use(function timeLog(req, res, next) {
-  console.log('Time: ', Date.now());
-  next();
-});
-// 定义网站主页的路由
-router.get('/', function(req, res) {
-  res.send('Birds home page');
-});
-// 定义 about 页面的路由
-router.get('/about', function(req, res) {
-  res.send('About birds');
-});
- 
-module.exports = router;
+const express = require('express');
+// const userRouter = require('./routes/user.js')
+
+
+const app = express();
+
+app.use(express.static('public'));
+
+app.use('/user',require('./routes/user.js'));
+app.use('/blog',require('./routes/blog.js'));
+
+app.listen(3000,()=>{
+	console.log('server is running at 127.0.0.1:3000')
+})
