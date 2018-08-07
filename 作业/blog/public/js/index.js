@@ -112,12 +112,12 @@
 				.done((result)=>{
 					console.log(result)
 					if (result.code === 0) {
-						/*
-						// 有问题
-						$login.hide();
-						$userInfo.find('span').html(result.data.username);
+						
+						/*// 有问题
 						$userInfo.show();
-						*/
+						$userInfo.find('span').html(result.data.username);
+						$login.hide();*/
+						
 						window.location.reload();
 					} else {
 						// console.log(result.message);

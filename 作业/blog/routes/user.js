@@ -74,13 +74,19 @@ router.post('/login',(req,res)=>{
 	.findOne({username:obj.username,password:hmac(obj.password)})
 	.then((user)=>{
 		if (user) { // 登录成功
-			result.data = {
+			/*result.data = {
 				_id:user._id,
 				username:user.username,
 				isAdmin:user.isAdmin
 			}
 			// 将 cookies 对象设置进去,接下来就可以 get 到
 			req.cookies.set('userInfo',JSON.stringify(result.data));
+			res.json(result);*/
+			req.session.userInfo = {
+				_id:user._id,
+				username:user.username,
+				isAdmin:user.isAdmin
+			}
 			res.json(result);
 		} else {
 			result.code = 10;
@@ -96,7 +102,8 @@ router.get('/logout',(req,res)=>{
 		code:0,
 		massage:''
 	}
-	req.cookies.set('userInfo',null);
+	// req.cookies.set('userInfo',null);
+	req.session.destroy();
 	res.json(result);
 })
 

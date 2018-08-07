@@ -12,7 +12,7 @@ app.use(express.static('public'));
 // app.use('虚拟路径',require(''))
 // app.use('/user',require('./routes/user.js'));
 // app.use('/blog',require('./routes/blog.js'));
-app.use(bodyParser.urlencoded({ extend:false }));
+app.use(bodyParser.urlencoded({ extended:false }));
 app.use(bodyParser.json());
 /*app.post('/',(req,res)=>{
 	let body = '';

@@ -7,7 +7,7 @@
 	<link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-	<nav class="navbar navbar-default">
+	<nav class="navbar navbar-default navbar-fixed-top">
 		<div class="container">
 			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header">
@@ -45,6 +45,11 @@
 							<p class="col-sm-offset-2">
 								欢迎：<span>{{ userInfo.username }}</span>
 							</p>
+							{% if userInfo.isAdmin %}
+							<a href="/admin" class="link col-sm-offset-2"">进入管理中心</a>
+							{% else %}
+							<a href="/center" class="link col-sm-offset-2">进入用户中心</a>
+							{% endif %}
 							<a href="javascript:;" class="link col-sm-offset-2" id="logout">退出</a>
 							<p class="err col-sm-offset-2 text-danger"></p>
 						</div>

@@ -3,6 +3,8 @@ const bodyParser = require('body-parser');
 const swig = require('swig');
 const mongoose = require('mongoose');
 const Cookies = require('cookies');
+const session = require('express-session');
+const MongoStore = require("connect-mongo")(session);
 
 // 启动数据库
 const app = express();
@@ -28,7 +30,7 @@ app.set('view engine', 'html');
 app.use(express.static('public'));
 
 // 设置 cookie 的中间件
-app.use((req,res,next)=>{
+/*app.use((req,res,next)=>{
 	req.cookies = new Cookies(req,res);
 	// console.log(req.cookies.get('userInfo'));
 	req.userInfo = {};
@@ -43,11 +45,30 @@ app.use((req,res,next)=>{
 		}catch(err) {
 			console.log(err);
 		}
-		
 	}
 	next();
+})*/
+app.use(session({
+	//设置cookie名称
+	name:'blog',
+	//用它来对session cookie签名，防止篡改
+	secret: 'keyboard cat',
+	//强制保存session即使它并没有变化
+	resave: false,
+	//强制将未初始化的session存储
+	saveUninitialized: true,
+	//如果为true,则每次请求都更新cookie的过期时间
+	rolling:true,
+    //cookie过期时间 1天
+    cookie:{maxAge:1000*60*60*24},    
+    //设置session存储在数据库中
+    store:new MongoStore({ mongooseConnection: mongoose.connection }) 
+}))
+app.use((req,res,next)=>{
+	// console.log(req.session);
+	req.userInfo = req.session.userInfo || {};
+	next();
 })
-
 
 // 4:添加处理post请求的中间件
 app.use(bodyParser.urlencoded({ extended:false }));
@@ -56,6 +77,7 @@ app.use(bodyParser.json());
 // 5:处理路由
 app.use('/',require('./routes/index.js'));
 app.use('/user',require('./routes/user.js'));
+app.use('/admin',require('./routes/admin.js'));
 
 app.listen(3000,()=>{
 	console.log('running on 127.0.0.1:3000');

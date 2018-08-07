@@ -6,7 +6,7 @@
 .main .container .row .col-md-8 .item
 {
 	height: 420px;
-}
+} 
 #bs-example-navbar-collapse-1 .navbar-nav .active a{
 	color: orange;
 }
@@ -19,6 +19,12 @@ a.link{
 a.link:hover{
 	text-decoration: none;
 	color: orange;
+}
+.navbar{
+	background: rgba(255,255,255,0.7);
+}
+.main{
+	margin-top: 80px;
 }
 .form-horizontal{
 	/*padding: 15px 0;*/
