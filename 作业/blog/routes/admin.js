@@ -15,7 +15,25 @@ router.get('/',(req,res)=>{
 	// console.log(req.cookies.get('userInfo'));
 	// console.log(req.userInfo);
 	// res.send('admin');
-	res.render('admin/admin');
+	res.render('admin/admin',{
+		userInfo:req.userInfo
+	});
+})
+
+// 退出
+router.get('/logout',(req,res)=>{
+	let result = {
+		code:0,
+		massage:''
+	}
+	// req.cookies.set('userInfo',null);
+	req.session.destroy();
+	res.json(result);
+})
+
+
+router.get('/',(req,res)=>{
+	res.render('admin/userlist')
 })
 
 module.exports = router;
