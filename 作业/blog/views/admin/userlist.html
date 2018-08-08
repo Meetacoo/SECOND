@@ -9,7 +9,7 @@
     <th>是否为管理员</th>
   </tr>
   <tr>
-    <td>{{ userInfo._id }}</td>
+    <td>{{ userInfo._id.toString() }}</td>
     <td>{{ userInfo.username }}</td>
     <td>
       {% if userInfo.isAdmin %}
