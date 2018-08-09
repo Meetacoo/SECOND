@@ -55,7 +55,7 @@ router.post('/add',(req,res)=>{
 	.catch((err)=>{//新增失败,渲染错误页面
  		res.render('admin/error',{
 			userInfo:req.userInfo,
-			message:'新增分类失败,数据库操作失败'
+			message:'新增文章失败,数据库操作失败'
 		})
 	})
 })
