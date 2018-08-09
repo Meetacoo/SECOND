@@ -145,8 +145,6 @@
 		.fail((err)=>{
 			console.log(err);
 		})
-		/*$userInfo.hide();
-		$login.show();*/
 	})
 
 	check();

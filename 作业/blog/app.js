@@ -78,6 +78,8 @@ app.use(bodyParser.json());
 app.use('/',require('./routes/index.js'));
 app.use('/user',require('./routes/user.js'));
 app.use('/admin',require('./routes/admin.js'));
+app.use('/category',require('./routes/category.js'));
+app.use('/article',require('./routes/article.js'));
 
 app.listen(3000,()=>{
 	console.log('running on 127.0.0.1:3000');
