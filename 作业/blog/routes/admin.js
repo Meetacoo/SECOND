@@ -1,6 +1,8 @@
 const Router = require('express').Router;
 const blogModel = require('../models/blog.js');
 const pagination = require('../util/pagination.js');
+const multer = require('multer');
+const upload = multer({ dest: 'public/uploads/' });
 
 const router = Router();
 
@@ -103,5 +105,14 @@ router.get('/users',(req,res)=>{
 	})
 })
 
+router.post('/uploadImages',upload.single('upload'),(req,res)=>{
+	let path = "/uploads/"+req.file.filename;
+
+	// console.log(path);
+	res.json({
+		uploaded:true,
+		url:path
+	})
+})
 
 module.exports = router;

@@ -10,17 +10,10 @@
   </tr>
   {% for user in users %}
   <tr>
-<<<<<<< HEAD
     <td>{{ user._id.toString() }}</td>
     <td>{{ user.username }}</td>
     <td>
-      {% if user.isAdmin %}
-=======
-    <td>{{ userInfo._id.toString() }}</td>
-    <td>{{ userInfo.username }}</td>
-    <td>
       {% if userInfo.isAdmin %}
->>>>>>> b40addb7c0437e62f5a0cd5c4d1ba19f8cc2772a
         是
       {% else %}
         否
@@ -29,12 +22,7 @@
   </tr>
   {% endfor %}
 </table>
-<<<<<<< HEAD
-
 {% if pages > 1 %}
 {% include './pagination.html' %}
 {% endif %}
 {% endblock %}
-=======
-{% endblock %}
->>>>>>> b40addb7c0437e62f5a0cd5c4d1ba19f8cc2772a

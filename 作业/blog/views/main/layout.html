@@ -23,12 +23,9 @@
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="index.html">零时</a></li>
-					<li><a href="list.html" class="link">零点</a></li>
-					<li><a href="#" class="link">雨</a></li>
-					<li><a href="#" class="link">风霜</a></li>
-					<li><a href="#" class="link">雨雪</a></li>
-					<li><a href="#" class="link">共蓑笠</a></li>
+					{% for category in categories %}
+						<li><a href="/list/{{ category._id.toString() }}">{{ category.name }}</a></li>
+			        {% endfor %}
 				</ul>
 			</div><!-- /.navbar-collapse -->
 		</div><!-- /.container -->

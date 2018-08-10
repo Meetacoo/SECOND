@@ -33,7 +33,13 @@ pagination = (options)=>{
 			
 			let skip = (page - 1)*limit;
 
-			options.model.find(options.query,options.projection)
+			let hahaha = options.model.find(options.query,options.projection);
+			if (options.populate) {
+				for (var i = 0; i < options.populate.length; i++) {
+					hahaha = hahaha.populate(options.populate[i]);
+				}
+			}
+			hahaha
 			.sort(options.sort)
 			.skip(skip)
 			.limit(limit)

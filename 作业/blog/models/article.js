@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 var ArticleSchema = new mongoose.Schema({
 	category: {
 		type:mongoose.Schema.Types.ObjectId,
-		ref:'Category'
+		ref:'category'
 	},
 	user: {
 		type:mongoose.Schema.Types.ObjectId,

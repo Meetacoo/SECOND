@@ -1,8 +1,8 @@
 (function($){
 	$('#btn-sub').on('click',()=>{
-		var catename = $('[name = "name"]').val();
+		var categoryname = $('[name = "name"]').val();
 		// alert(catename);
-		if(catename.trim() == ''){
+		if(categoryname.trim() == ''){
 			$('.err').html ('分类名称不能为空');
 			return false;
 		}else{

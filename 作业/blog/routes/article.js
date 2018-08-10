@@ -16,15 +16,32 @@ router.use((req,res,next)=>{
 
 // 显示文章页
 router.get('/',(req,res)=>{
-	res.render('admin/article_list',{
+	/*res.render('admin/article_list',{
 		userInfo:req.userInfo
-	});
+	});*/
+	let options = {
+		page: req.query.page,
+		model: articleModel,
+		query: {},
+		show: '_id username isAdmin',
+		sort: {_id:1},
+		populate: [{path:'category',select:'name'},{path:'user',select:'username'}]
+	}
+	pagination(options)
+	.then((data)=>{
+		res.render('admin/article_list',{
+			userInfo:req.userInfo,
+			articles:data.users,
+			page:data.page,
+			list:data.list,
+			createAt:data.users.date,
+			pages:data.pages,
+			url:'/article'
+		});	 
+	})
 })
 //显示新增文章页面
 router.get('/add',(req,res)=>{
-	/*res.render('admin/article_add',{
-		userInfo:req.userInfo
-	});*/
 	categoryModel.find({},'_id name')
 	.sort({order:1})
 	.then((categories)=>{
@@ -60,4 +77,72 @@ router.post('/add',(req,res)=>{
 	})
 })
 
+//显示新增文章页面
+router.get("/edit/:id",(req,res)=>{
+	let id = req.params.id;
+	
+	categoryModel.find({})
+	.populate({path:'category',select:'name'})
+	.then((categories)=>{
+		articleModel.findById(id)
+		.then((article)=>{
+			res.render('admin/article_add_edit',{
+				userInfo:req.userInfo,
+				cates:categories,
+				article:article
+			});
+		})
+				
+	});
+});
+
+router.post('/edit',(req,res)=>{
+	// let id = req.params.id; 
+	let body = req.body;
+	let options = {
+		category:body.category,
+		title:body.title,
+		intro:body.intro,
+		content:body.content
+	}
+	articleModel.updateOne({_id:body.id},options,(err,raw)=>{
+		if (!err) {
+			res.render('admin/success',{
+				userInfo:req.userInfo,
+				message:'编辑文章成功',
+				url:'/article'
+			})
+		} else {
+			res.render('admin/error',{
+				userInfo:req.userInfo,
+				message:'编辑文章失败',
+				url:'/article'
+			})
+		}
+	})
+})
+
+router.get('/delete/:id',(req,res)=>{
+	// res.send('aaa');
+	/*let body = req.body;
+	console.log(body);*/
+	let id = req.params.id;
+	
+	articleModel.remove({_id:id},(err,raw)=>{
+		if (!err) {
+			res.render('admin/success',{
+				userInfo:req.userInfo,
+				message:'删除成功',
+				url:'/article'
+			})
+		} else {
+			res.render('admin/error',{
+				userInfo:req.userInfo,
+				message:'删除失败',
+				url:'/article'
+			})
+		}
+		
+	});
+})
 module.exports = router;
