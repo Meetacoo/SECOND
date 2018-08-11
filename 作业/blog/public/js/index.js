@@ -149,16 +149,25 @@
 		// console.log($this);
 		var page = 1;
 		var currentPage = $('#page').find('.active a').html();
-		if($this.attr('aria-label') == 'Previous'){//上一页
+		var label = $this.attr('aria-label');
+
+		if(label == 'Previous'){//上一页
 			page = currentPage - 1;
-		}else if($this.attr('aria-label') == 'Next'){//下一页
+		}else if(label == 'Next'){//下一页
 			page = currentPage*1 + 1;
 		}else{
 			page = $(this).html();
 		}
 
+		var query = 'page='+page;
+		var category = $('#cate-id').val();
+
+		if(category){
+			query+="&category="+ category;
+		}
+
 		$.ajax({
-			url:'/articles?page='+page,
+			url:'/articles?'+query,
 			type:'get',
 			dataType:'json'
 		})

@@ -17,7 +17,8 @@ pagination = (options)=>{
 		}
 		//每页显示条数
 		let limit = 2;
-		options.model.estimatedDocumentCount(options.query)
+		// options.model.estimatedDocumentCount(options.query)
+		options.model.countDocuments(options.query)
 		.then((count)=>{
 			let pages = Math.ceil(count / limit);
 			if(page > pages){

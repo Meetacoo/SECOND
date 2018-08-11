@@ -69,6 +69,13 @@ router.get("/articles",(req,res)=>{
 		populate:[{path:'category',select:'name'},{path:'user',select:'username'}]
 	}
 
+	// console.log('req.query.category:::',req.query.category);
+	let category = req.query.category
+	let query = {}
+	if (category) {
+		query.category = category
+	}
+	// console.log(query);
 	pagination(options)
 	.then((data)=>{
 		res.json({
@@ -77,10 +84,6 @@ router.get("/articles",(req,res)=>{
 		})
 	})
 });
-
-
-
-
 
 router.get("/view/:id",(req,res)=>{
 	// let body = req.body;
@@ -98,8 +101,33 @@ router.get("/view/:id",(req,res)=>{
 				userInfo:req.userInfo,
 				article:article,
 				categories:data.categories,
-				topArticles:data.topArticles
+				topArticles:data.topArticles,
+				category:article.category._id.toString()
 			})			
+		})		
+	})
+})
+
+router.get("/list/:id",(req,res)=>{
+	let id = req.params.id;
+	// console.log(id);
+	articleModel.getPaginationArticles(req,{category:id})
+	.then((pageData)=>{
+		// console.log(pageData)
+		getCommonData()
+		.then(data=>{
+			// console.log('data:::',data);
+			res.render('main/list',{
+				userInfo:req.userInfo,
+				articles:pageData.docs,
+				page:pageData.page,
+				list:pageData.list,
+				pages:pageData.pages,
+				categories:data.categories,
+				topArticles:data.topArticles,
+				category:id,
+				url:'/list'
+			})		
 		})		
 	})
 })
