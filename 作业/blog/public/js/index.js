@@ -33,19 +33,19 @@
 			// 首字母，可有数字下划线，2-10个字符
 			if (!usernameReg.test(username)) {
 				errmsg = '首字母，可有数字下划线，2-10个字符';
-				console.log('首字母，可有数字下划线，2-10个字符');
+				// console.log('首字母，可有数字下划线，2-10个字符');
 			}
 			// 密码6-10个字符
 			else if (!passwordReg.test(password)) {
 				errmsg = '6-10个字符';
-				console.log('6-10个字符');
+				// console.log('6-10个字符');
 			}
 			else if (password != repassword) {
 				errmsg = '密码不等';
-				console.log('密码不等');
+				// console.log('密码不等');
 			}
 			else {
-				console.log('right');
+				// console.log('right');
 			}
 
 			if (errmsg) {
@@ -84,12 +84,12 @@
 			// 首字母，可有数字下划线，2-10个字符
 			if (!usernameReg.test(username)) {
 				errmsg = '首字母，可有数字下划线，2-10个字符';
-				console.log('首字母，可有数字下划线，2-10个字符');
+				// console.log('首字母，可有数字下划线，2-10个字符');
 			}
 			// 密码6-10个字符
 			else if (!passwordReg.test(password)) {
 				errmsg = '6-10个字符';
-				console.log('6-10个字符');
+				// console.log('6-10个字符');
 			}
 			else {
 				console.log('right');
@@ -110,17 +110,10 @@
 					}
 				})
 				.done((result)=>{
-					console.log(result)
+					// console.log(result)
 					if (result.code === 0) {
-						
-						/*// 有问题
-						$userInfo.show();
-						$userInfo.find('span').html(result.data.username);
-						$login.hide();*/
-						
 						window.location.reload();
 					} else {
-						// console.log(result.message);
 						$login.find('.err').html(result.message);
 					}
 				})
@@ -148,4 +141,97 @@
 	})
 
 	check();
+
+
+	//发送文章列表的请求
+	$('#page').on('click','a',function(){
+		var $this = $(this);
+		// console.log($this);
+		var page = 1;
+		var currentPage = $('#page').find('.active a').html();
+		if($this.attr('aria-label') == 'Previous'){//上一页
+			page = currentPage - 1;
+		}else if($this.attr('aria-label') == 'Next'){//下一页
+			page = currentPage*1 + 1;
+		}else{
+			page = $(this).html();
+		}
+
+		$.ajax({
+			url:'/articles?page='+page,
+			type:'get',
+			dataType:'json'
+		})
+		.done(function(result){
+			if(result.code == 0){
+				buildArticleList(result.data.docs);
+				buildPage(result.data.list,result.data.page)
+			}
+			// console.log(result)
+		})
+		.fail(function(err){
+			console.log(err)
+		})
+	})
+
+	function buildArticleList(articles){
+		// console.log('articles:::',articles)
+		var html = '';
+		for(var i = 0;i<articles.length;i++){
+		var data = moment(articles[i].createdAt).format('YYYY年MM月DD日 HH:mm:ss ');
+		html +=`<div class="panel panel-default content-item">
+					<div class="panel-heading">
+						<h3 class="panel-title">
+							<a href="/view/${articles[i]._id}" class="link" target="_blank">${ articles[i].title }</a>
+						</h3>
+					</div>
+					<div class="panel-body">
+						${ articles[i].intro }
+					</div>
+					<div class="panel-footer">
+						<span class="glyphicon glyphicon-user"></span>
+						<span class="panel-footer-text text-muted">
+							${ articles[i].user.username }
+						</span>
+						<span class="glyphicon glyphicon-th-list"></span>
+						<span class="panel-footer-text text-muted">
+							${ articles[i].category.name }
+						</span>
+						<span class="glyphicon glyphicon-time"></span>
+						<span class="panel-footer-text text-muted">
+							${ data }
+						</span>
+						<span class="glyphicon glyphicon-eye-open"></span>
+						<span class="panel-footer-text text-muted">
+							<em>${ articles[i].click }</em>已阅读
+						</span>
+					</div>
+				</div>`
+		}
+		$('#article-list').html(html);
+	}
+
+
+	function buildPage(list,page){
+		var html = `<li>
+						<a href="javascript:;" aria-label="Previous">
+						<span aria-hidden="true">&laquo;</span>
+						</a>
+					</li>`
+
+		for(i in list){
+			if(list[i] == page){
+				html += `<li class="active"><a href="javascript:;">${list[i]}</a></li>`;
+			}else{
+				html += `<li><a href="javascript:;">${list[i]}</a></li>`
+			}
+		}
+
+		html += `<li>
+					<a href="javascript:;" aria-label="Next">
+					<span aria-hidden="true">&raquo;</span>
+					</a>
+				</li>`
+		$('#page .pagination').html(html)	    
+	}
 })(jQuery)

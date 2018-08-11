@@ -21,7 +21,7 @@ router.get('/list',(req,res)=>{
 	.then((data)=>{
 		res.render('admin/category',{
 			userInfo:req.userInfo,
-			categories:data.users,
+			categories:data.docs,
 			page:data.page,
 			list:data.list,
 			pages:data.pages,
@@ -82,7 +82,7 @@ router.get("/edit/:id",(req,res)=>{
 	let id = req.params.id;
 	categoryModel.findById(id)
 	.then((category)=>{
-		console.log("category:::::::::::::",category);
+		// console.log("category:::::::::::::",category);
 		res.render('admin/category_add_edit',{
 			userInfo:req.userInfo,
 			article:category,
@@ -96,8 +96,8 @@ router.post('/edit',(req,res)=>{
 		userInfo:req.userInfo,
 	})*/
 	let body = req.body;
-	console.log(body);
-	/*categoryModel.findOne({name:body.name})
+	// console.log(body);
+/*categoryModel.findOne({name:body.name})
 	.then((category)=>{
 		if (category && category.order == body.order ) {
 			res.render('admin/error',{
@@ -120,7 +120,8 @@ router.post('/edit',(req,res)=>{
 				}
 			})
 		}
-	})*/
+	})
+*/
 	categoryModel.findById(body.id)
 	.then((category)=>{
 		if (category.name == body.name && category.order == body.order) {

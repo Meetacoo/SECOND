@@ -96,7 +96,7 @@ router.get('/users',(req,res)=>{
 	.then((data)=>{
 		res.render('admin/userlist',{
 			userInfo:req.userInfo,
-			users:data.users,
+			users:data.docs,
 			page:data.page,
 			list:data.list,
 			pages:data.pages,

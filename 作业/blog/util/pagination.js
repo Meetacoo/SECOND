@@ -3,7 +3,8 @@
 	projection: options.projection,
 	page: options.page,
 	query: options.query,
-	sort: options.sort
+	sort: options.sort,
+	populate:[]
 }*/
 pagination = (options)=>{
 	return new Promise ((resolve,reject) => {
@@ -45,7 +46,7 @@ pagination = (options)=>{
 			.limit(limit)
 			.then((docs)=>{
 				resolve({
-					users:docs,
+					docs:docs,
 					page:page*1,
 					list:list,
 					pages:pages
@@ -56,6 +57,6 @@ pagination = (options)=>{
 	
 }	
 //获取所有用户的信息,分配给模板
-	//需要显示的页码
+//需要显示的页码
 	
 module.exports = pagination;

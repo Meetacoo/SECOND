@@ -3,8 +3,9 @@
 <head>
 	<meta charset="UTF-8">
 	<title>{% block title %}{% endblock %}</title>
-	<link rel="stylesheet" href="lib/css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/index.css">
+	<link rel="stylesheet" href="/lib/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/css/index.css">
+	{% block css %}{% endblock %}
 </head>
 <body>
 	<nav class="navbar navbar-default navbar-fixed-top">
@@ -106,12 +107,12 @@
 					</div>
 					<div class="ad">
 						<a href="#" class="thumbnail">
-							<img src="img/l-1.jpg" class="img-responsive" alt="Responsive image">
+							<img src="/img/l-1.jpg" class="img-responsive" alt="Responsive image">
 						</a>
 					</div>
 					<div class="ad">
 						<a href="#" class="thumbnail">
-							<img src="img/l-2.jpg" class="img-responsive" alt="Responsive image">
+							<img src="/img/l-2.jpg" class="img-responsive" alt="Responsive image">
 						</a>
 					</div>
 					<div class="panel panel-default about-self">
@@ -121,7 +122,7 @@
 						<div class="media">
 							<div class="media-left">
 								<a href="#" class="media-link">
-									<img class="media-object self-img img-circle" src="img/l-2.jpg" alt="l-2.jpg">
+									<img class="media-object self-img img-circle" src="/img/l-2.jpg" alt="l-2.jpg">
 								</a>
 							</div>
 							<div class="media-body">
@@ -134,19 +135,19 @@
 						<div class="panel-heading" id="panel-heading">
 							<h3 class="panel-title">点击排行</h3>
 						</div>
+						<div class="panel-body">
 						<ul class="list-group">
-							<li class="list-group-item">Cras justo odio</li>
-							<li class="list-group-item">Dapibus ac facilisis in</li>
-							<li class="list-group-item">Morbi leo risus</li>
-							<li class="list-group-item">Porta ac consectetur ac</li>
-							<li class="list-group-item">Vestibulum at eros</li>
+							{% for article in topArticles %}
+							<li class="list-group-item"><a href="/view/{{ article._id.toString() }}" class="link text-ellipsis">[{{ article.click }}]{{ article.title }}</a></li>
+							{% endfor %}				  
 						</ul>
+					  </div>
 					</div>
 					<div class="panel panel-default focus">
 						<div class="panel-heading" id="panel-heading">
 							<h3 class="panel-title">快关注我</h3>
 							<div class="panel-body">
-								<img src="img/lunbo1.jpg" class="img-responsive focus-img" alt="Responsive image">
+								<img src="/img/lunbo1.jpg" class="img-responsive focus-img" alt="Responsive image">
 							</div>
 						</div>
 					</div>
@@ -155,7 +156,8 @@
 		</div>
 	</div>
 </body>
-<script src="jquery/jquery-1.12.4.js"></script>
-<script src="lib/js/bootstrap.min.js"></script>
-<script src="js/index.js"></script>
+<script src="/jquery/jquery-1.12.4.js"></script>
+<script src="/lib/js/bootstrap.min.js"></script>
+<script src="/lib/moment/moment.js"></script>
+<script src="/js/index.js"></script>
 </html>

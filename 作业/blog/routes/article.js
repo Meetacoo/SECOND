@@ -19,7 +19,7 @@ router.get('/',(req,res)=>{
 	/*res.render('admin/article_list',{
 		userInfo:req.userInfo
 	});*/
-	let options = {
+	/*let options = {
 		page: req.query.page,
 		model: articleModel,
 		query: {},
@@ -34,10 +34,20 @@ router.get('/',(req,res)=>{
 			articles:data.users,
 			page:data.page,
 			list:data.list,
-			createAt:data.users.date,
 			pages:data.pages,
 			url:'/article'
 		});	 
+	})*/
+	articleModel.getPaginationArticles(req)
+	.then((data)=>{
+		res.render('admin/article_list',{
+			userInfo:req.userInfo,
+			articles:data.docs,
+			page:data.page,
+			list:data.list,
+			pages:data.pages,
+			url:'/article'
+		});	
 	})
 })
 //显示新增文章页面
