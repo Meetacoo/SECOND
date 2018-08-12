@@ -60,7 +60,7 @@ router.get('/',(req,res)=>{
 
 //ajax请求获取文章列表的分页数据
 router.get("/articles",(req,res)=>{
-	let options = {
+	/*let options = {
 		page: req.query.page,//需要显示的页码
 		model:articleModel, //操作的数据模型
 		query:{}, //查询条件
@@ -69,14 +69,22 @@ router.get("/articles",(req,res)=>{
 		populate:[{path:'category',select:'name'},{path:'user',select:'username'}]
 	}
 
+	// console.log(query);
+	pagination(options)
+	.then((data)=>{
+		res.json({
+			code:'0',
+			data:data
+		})
+	})*/
+
 	// console.log('req.query.category:::',req.query.category);
 	let category = req.query.category
 	let query = {}
 	if (category) {
 		query.category = category
 	}
-	// console.log(query);
-	pagination(options)
+	articleModel.getPaginationArticles(req,query)
 	.then((data)=>{
 		res.json({
 			code:'0',
@@ -126,7 +134,7 @@ router.get("/list/:id",(req,res)=>{
 				categories:data.categories,
 				topArticles:data.topArticles,
 				category:id,
-				url:'/list'
+				url:'/articles'
 			})		
 		})		
 	})

@@ -187,7 +187,7 @@
 		// console.log('articles:::',articles)
 		var html = '';
 		for(var i = 0;i<articles.length;i++){
-		var data = moment(articles[i].createdAt).format('YYYY年MM月DD日 HH:mm:ss ');
+		var data = moment(articles[i].date).format('YYYY年MM月DD日 HH:mm:ss ');
 		html +=`<div class="panel panel-default content-item">
 					<div class="panel-heading">
 						<h3 class="panel-title">
@@ -243,4 +243,30 @@
 				</li>`
 		$('#page .pagination').html(html)	    
 	}
+
+	// 发布评论
+	$('#comment-btn').on('click',function(){
+		var articleId = $('#article-id').val();
+		var commentContent = $('#comment-content').val();
+
+		if (commentContent.trim() == '') {
+			$('.err').html('评论内容不能为空');
+			return false;
+		} else {
+			$('.err').html('');
+		}
+
+		$.ajax({
+			url:'/comment/add',
+			type:'POST',
+			dataType:'json',
+			data:{id:articleId,content:commentContent}
+		})
+		.done(function(result){
+			console.log(result);
+		})
+		.fail(function(err){
+			console.log(err);
+		})
+	})
 })(jQuery)
