@@ -38,7 +38,7 @@
 	<div class="panel panel-default content-item">
 	  <div class="panel-heading">
 	    <h3 class="panel-title">
-	    	<a href="/view/{{ article._id.toString() }}" class="link" target="_blank">{{ article.title }}</a>
+	    	<a href="/view/{{ article._id.toString() }}" class="link">{{ article.title }}</a>
 		</h3>
 	  </div>
 	  <div class="panel-body">
@@ -66,8 +66,9 @@
 	{% endfor %}
 	</div>
 
-	<nav aria-label="Page navigation" id="page">
-	  <ul class="pagination">
+	<nav aria-label="Page navigation" id="article-page" data-url="/articles" data-id="{{ category }}">
+		{% include './pagination.html' %}
+	  <!-- <ul class="pagination">
 	    <li>
 	      <a href="javascript:;" aria-label="Previous">
 	        <span aria-hidden="true">&laquo;</span>
@@ -85,6 +86,6 @@
 	        <span aria-hidden="true">&raquo;</span>
 	      </a>
 	    </li>
-	  </ul>
+	  </ul> -->
 	</nav>
 {% endblock %}

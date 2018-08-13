@@ -1,9 +1,10 @@
 const Router = require('express').Router;
 const CommentModel = require('../models/comment.js')
+const articleModel = require('../models/article.js')
 
 const router = Router(); 
 
-// 注册用户
+// 添加评论
 router.post('/add',(req,res)=>{
 	let body = req.body;
 	// console.log(body);
@@ -14,9 +15,30 @@ router.post('/add',(req,res)=>{
 	})
 	.save()
 	.then(comment=>{
+		CommentModel.getPaginationComments(req,{article:body.id})
+		.then(data=>{
+			res.json({
+				code:0,
+				data:data
+			})
+		})
+	})
+	.catch(err=>{
+		console.log(err);
+	})
+})
+
+router.get('/list',(req,res)=>{
+	let article = req.query.id;
+	let query = {}
+	if (article) {
+		query.article = article
+	}
+	CommentModel.getPaginationComments(req,query)
+	.then((data)=>{
 		res.json({
-			code:0,
-			// data:data
+			code:'0',
+			data:data
 		})
 	})
 })

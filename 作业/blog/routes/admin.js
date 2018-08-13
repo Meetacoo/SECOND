@@ -1,8 +1,11 @@
 const Router = require('express').Router;
 const blogModel = require('../models/blog.js');
+const commentModel = require('../models/comment.js');
 const pagination = require('../util/pagination.js');
 const multer = require('multer');
 const upload = multer({ dest: 'public/uploads/' });
+const fs = require('fs');
+const path = require('path');
 
 const router = Router();
 
@@ -113,6 +116,63 @@ router.post('/uploadImages',upload.single('upload'),(req,res)=>{
 		uploaded:true,
 		url:path
 	})
+})
+
+// 
+router.get('/comments',(req,res)=>{
+	commentModel.getPaginationComments(req)
+	.then(data=>{
+		res.render('admin/comment_list',{
+			userInfo:req.userInfo,
+			comments:data.docs,
+			page:data.page,
+			pages:data.pages,
+			list:data.list
+		})
+	})
+})
+
+router.get('/comment/delete/:id',(req,res)=>{
+	let id = req.params.id;
+	
+	commentModel.remove({_id:id},(err,raw)=>{
+		if (!err) {
+			res.render('admin/success',{
+				userInfo:req.userInfo,
+				message:'删除评论成功',
+				url:'/admin/comments'
+			})
+		} else {
+			res.render('admin/error',{
+				userInfo:req.userInfo,
+				message:'删除评论失败',
+			})
+		}
+		
+	});
+})
+
+// 显示站点管理页面
+router.get('/site',(req,res)=>{
+	let filePath = path.normalize(__dirname + '/../site-info.json');
+	fs.readFile(filePath,(err,data)=>{
+		if(!err){
+			let site = JSON.parse(data);
+			res.render('admin/site',{
+					userInfo:req.userInfo,
+					site:site
+			});	
+		}else{
+			console.log(err)
+		}
+	})
+	/*res.render('admin/site',{
+		userInfo:req.userInfo
+	})*/
+})
+//处理修改网站配置请求
+router.post("/site",(req,res)=>{
+	console.log(req.body)
 })
 
 module.exports = router;

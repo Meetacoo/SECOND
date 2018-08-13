@@ -2,6 +2,7 @@ const Router = require('express').Router;
 const blogModel = require('../models/blog.js');
 const catetoryModel = require('../models/category.js')
 const articleModel = require('../models/article.js');
+const commentModel = require('../models/comment.js');
 const pagination = require('../util/pagination.js');
 const getCommonData = require('../util/getCommonData.js');
 
@@ -79,7 +80,8 @@ router.get("/articles",(req,res)=>{
 	})*/
 
 	// console.log('req.query.category:::',req.query.category);
-	let category = req.query.category
+	// let category = req.query.category
+	let category = req.query.id;
 	let query = {}
 	if (category) {
 		query.category = category
@@ -104,16 +106,39 @@ router.get("/view/:id",(req,res)=>{
 		// console.log("article",article);
 		getCommonData()
 		.then(data=>{
-			// console.log(data);
-			res.render('main/detail',{
-				userInfo:req.userInfo,
-				article:article,
-				categories:data.categories,
-				topArticles:data.topArticles,
-				category:article.category._id.toString()
-			})			
+			/*let options = {
+				page: req.query.page,//需要显示的页码
+				model:commentModel, //操作的数据模型
+				query:{article:id}, //查询条件
+				projection:'-__v', //投影，
+				sort:{_id:-1}, //排序
+				populate:[{path:'article',select:'title'},{path:'user',select:'username'}]
+			}
+			pagination(options)*/
+			commentModel.getPaginationComments(req,{article:id})
+			.then(pageData=>{
+				console.log(pageData.docs)
+				getCommonData()
+				.then(data=>{
+					res.render('main/detail',{
+						userInfo:req.userInfo,
+						article:article,
+						categories:data.categories,
+						topArticles:data.topArticles,
+						comments:pageData.docs,
+						list:pageData.list,
+						page:pageData.page,
+						pages:pageData.pages,
+						category:article.category._id.toString()
+					})			
+				})
+			})
+			.catch(err=>{
+				console.log(err);
+			})	
 		})		
 	})
+	
 })
 
 router.get("/list/:id",(req,res)=>{

@@ -144,7 +144,14 @@
 
 
 	//发送文章列表的请求
-	$('#page').on('click','a',function(){
+	var $articlePage = $('#article-page');
+	$articlePage.on('get-data',function(err,result){
+		// console.log(result);
+		buildArticleList(result.data.docs);
+		buildPage($articlePage,result.data.list,result.data.page)
+	})
+	$articlePage.pagination();
+	/*$('#page').on('click','a',function(){
 		var $this = $(this);
 		// console.log($this);
 		var page = 1;
@@ -181,13 +188,13 @@
 		.fail(function(err){
 			console.log(err)
 		})
-	})
+	})*/
 
 	function buildArticleList(articles){
 		// console.log('articles:::',articles)
 		var html = '';
 		for(var i = 0;i<articles.length;i++){
-		var data = moment(articles[i].date).format('YYYY年MM月DD日 HH:mm:ss ');
+		var date = moment(articles[i].date).format('YYYY年MM月DD日 HH:mm:ss ');
 		html +=`<div class="panel panel-default content-item">
 					<div class="panel-heading">
 						<h3 class="panel-title">
@@ -208,7 +215,7 @@
 						</span>
 						<span class="glyphicon glyphicon-time"></span>
 						<span class="panel-footer-text text-muted">
-							${ data }
+							${ date }
 						</span>
 						<span class="glyphicon glyphicon-eye-open"></span>
 						<span class="panel-footer-text text-muted">
@@ -221,7 +228,7 @@
 	}
 
 
-	function buildPage(list,page){
+	function buildPage($page,list,page){
 		var html = `<li>
 						<a href="javascript:;" aria-label="Previous">
 						<span aria-hidden="true">&laquo;</span>
@@ -241,10 +248,11 @@
 					<span aria-hidden="true">&raquo;</span>
 					</a>
 				</li>`
-		$('#page .pagination').html(html)	    
+		$page.find('.pagination').html(html)	    
 	}
 
 	// 发布评论
+	var $commentPage = $('#comment-page');
 	$('#comment-btn').on('click',function(){
 		var articleId = $('#article-id').val();
 		var commentContent = $('#comment-content').val();
@@ -264,9 +272,41 @@
 		})
 		.done(function(result){
 			console.log(result);
+			if (result.code == 0) {
+				// 1:渲染评论列表
+				buildCommentList(result.data.docs);
+				// 2:渲染分页
+				buildPage($commentPage,result.data.list,result.data.page)
+				$('#comment-content').val('');
+			}
 		})
 		.fail(function(err){
 			console.log(err);
 		})
 	})
+
+	function buildCommentList(comments){
+		// console.log('comments:::',comments)
+		var html = '';
+		for(var i = 0;i < comments.length;i++){
+		var date = moment(comments[i].date).format('YYYY年MM月DD日 HH:mm:ss ');
+		html +=`<div class="panel panel-default">
+					<div class="panel-heading">
+						${ comments[i].user.username } 发表于 ${ date }
+					</div>
+					<div class="panel-body">
+						${ comments[i].content }
+					</div>
+				</div>`
+		}
+		$('#comment-list').html(html);
+	}
+
+	//发送文章列表的请求
+	$commentPage.on('get-data',function(err,result){
+		// console.log(result);
+		buildCommentList(result.data.docs);
+		buildPage($commentPage,result.data.list,result.data.page)
+	})
+	$commentPage.pagination();
 })(jQuery)

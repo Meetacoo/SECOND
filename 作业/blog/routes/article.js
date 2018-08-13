@@ -87,7 +87,7 @@ router.post('/add',(req,res)=>{
 	})
 })
 
-//显示新增文章页面
+//显示编辑文章页面
 router.get("/edit/:id",(req,res)=>{
 	let id = req.params.id;
 	
