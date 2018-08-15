@@ -173,7 +173,7 @@ router.get('/site',(req,res)=>{
 //处理修改网站配置请求
 router.post("/site",(req,res)=>{
 	let body = req.body;
-	console.log(req.body)
+	// console.log(req.body)
 	let site = {
 		name:body.name,
 		author:{
@@ -212,7 +212,7 @@ router.post("/site",(req,res)=>{
 			path:body.adPath
 		})
 	}
-	console.log(site);
+	// console.log(site);
 
 	let siteContent = JSON.stringify(site);
 	let filePath = path.normalize(__dirname + '/../site-info.json');
@@ -244,12 +244,12 @@ router.get('/password',(req,res)=>{
 })
 router.post('/password',(req,res)=>{
 	let obj = req.body;
-	console.log(obj.repassword);
+	// console.log(obj.repassword);
 	blogModel
 	.findOneAndUpdate({_id:req.userInfo._id},{$set:{password:hmac(obj.repassword)}})
 	// .update({_id:req.userInfo._id},{password:hmac(obj.password)})
 	.then((user)=>{
-		console.log(user);
+		// console.log(user);
 		if(user){
 			req.session.destroy();
 			res.render('admin/success',{

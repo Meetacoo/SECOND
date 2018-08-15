@@ -5,7 +5,7 @@ const articleModel = require('../models/article.js')
 const router = Router(); 
 
 router.use((req,res,next)=>{
-	if (req.userInfo.isAdmin) {
+	if (req.userInfo._id) {
 		next();
 	}else{
 		res.send('<h1>请用管理员账号登录</h1>');
@@ -36,6 +36,7 @@ router.post('/add',(req,res)=>{
 })
 
 router.get('/list',(req,res)=>{
+	// console.log('aaa');
 	let article = req.query.id;
 	let query = {}
 	if (article) {
@@ -44,7 +45,7 @@ router.get('/list',(req,res)=>{
 	CommentModel.getPaginationComments(req,query)
 	.then((data)=>{
 		res.json({
-			code:'0',
+			code:0,
 			data:data
 		})
 	})

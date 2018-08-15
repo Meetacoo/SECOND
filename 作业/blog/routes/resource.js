@@ -37,7 +37,7 @@ router.get('/',(req,res)=>{
 	}
 	pagination(options)
 	.then(data=>{
-		console.log(data);
+		// console.log(data);
 		res.render('admin/resource_list',{
 			userInfo:req.userInfo,
 			resources:data.docs,

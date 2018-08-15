@@ -11,11 +11,10 @@ const router = Router();
 	}else{
 		res.send('<h1>请用管理员账号登录</h1>');
 	}
-})
-*/
+})*/
+
 // 注册用户
 router.post('/register',(req,res)=>{
-	console.log(req.body);
 	let obj = req.body;
 	let result = {
 		code:0,
@@ -73,7 +72,6 @@ router.post('/register',(req,res)=>{
 
 // 用户登录
 router.post('/login',(req,res)=>{
-	console.log(req.body);
 	let obj = req.body;
 	let result = {
 		code:0,

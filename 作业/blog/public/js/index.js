@@ -318,8 +318,9 @@
 
 	//发送文章列表的请求
 	$commentPage.on('get-data',function(err,result){
-		// console.log(result);
-		buildCommentList(result.data.docs);
+		if (result.data.pages) {
+			buildCommentList(result.data.docs);
+		}
 		buildPage($commentPage,result.data.list,result.data.page)
 	})
 	$commentPage.pagination();

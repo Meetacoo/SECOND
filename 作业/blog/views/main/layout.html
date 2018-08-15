@@ -63,11 +63,6 @@
 			<div class="row">
 				<div class="col-md-8">
 					{% block content %}{% endblock %}
-					<footer>
-						<p class="col-sm-offset-6">
-							Blog Design by <a href="#">Kuazhu</a> <a href="#">豫ICP备11002373号-1</a>.
-						</p>
-					</footer>
 				</div>
 				<div class="col-md-4  hidden-xs hidden-sm">
 					{% if userInfo._id %}
@@ -149,15 +144,17 @@
 						<div class="panel-heading" id="panel-heading">
 							<h3 class="panel-title">博主介绍</h3>
 						</div>
-						<div class="media">
-							<div class="media-left">
-								<a href="#" class="media-link">
-									<img class="media-object self-img img-circle" src="{{ site.author.image }}" alt="me.jpg">
-								</a>
-							</div>
-							<div class="media-body">
-								<h4 class="media-heading">{{ site.author.name }}</h4>
-								<p>{{ site.author.intro }}</p>
+						<div class="panel-body">
+							<div class="media">
+								<div class="media-left">
+									<a href="#" class="media-link">
+										<img class="media-object self-img img-circle" src="{{ site.author.image }}" alt="me.jpg">
+									</a>
+								</div>
+								<div class="media-body">
+									<h4 class="media-heading">{{ site.author.name }}</h4>
+									<p>{{ site.author.intro }}</p>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -183,6 +180,12 @@
 							</div>
 						</div>
 					</div>
+					
+					<footer>
+						<p class="col-sm-offset-6">
+							Blog Design by <a href="#">Kuazhu</a> <a href="#">豫ICP备11002373号-1</a>.
+						</p>
+					</footer>
 				</div>
 			</div>
 		</div>

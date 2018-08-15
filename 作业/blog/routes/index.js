@@ -118,7 +118,8 @@ router.get("/view/:id",(req,res)=>{
 			pagination(options)*/
 			commentModel.getPaginationComments(req,{article:id})
 			.then(pageData=>{
-				console.log(pageData.docs)
+				// console.log('hahahaa');
+				// console.log(pageData.docs)
 				getCommonData()
 				.then(data=>{
 					res.render('main/detail',{
@@ -130,7 +131,8 @@ router.get("/view/:id",(req,res)=>{
 						list:pageData.list,
 						page:pageData.page,
 						pages:pageData.pages,
-						category:article.category._id.toString()
+						category:article.category._id.toString(),
+						site:data.site
 					})			
 				})
 			})
@@ -160,7 +162,8 @@ router.get("/list/:id",(req,res)=>{
 				categories:data.categories,
 				topArticles:data.topArticles,
 				category:id,
-				url:'/articles'
+				url:'/articles',
+				site:data.site
 			})		
 		})		
 	})
