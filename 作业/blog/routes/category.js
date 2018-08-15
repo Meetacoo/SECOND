@@ -4,6 +4,13 @@ const categoryModel = require('../models/category.js');
 
 const router = Router();
 
+router.use((req,res,next)=>{
+	if (req.userInfo.isAdmin) {
+		next();
+	}else{
+		res.send('<h1>请用管理员账号登录</h1>');
+	}
+})
 /*router.get('/',(req,res)=>{
 	res.render('admin/category',{
 		userInfo:req.userInfo

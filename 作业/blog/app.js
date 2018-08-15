@@ -82,6 +82,7 @@ app.use('/category',require('./routes/category.js'));
 app.use('/article',require('./routes/article.js'));
 app.use('/comment',require('./routes/comment.js'));
 app.use('/resource',require('./routes/resource.js'));
+app.use('/home',require('./routes/home.js'));
 
 app.listen(3000,()=>{
 	console.log('running on 127.0.0.1:3000');

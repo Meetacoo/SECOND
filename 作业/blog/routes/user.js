@@ -4,6 +4,15 @@ const hmac = require('../util/hmac.js')
 
 const router = Router(); 
 
+//权限控制
+/*router.use((req,res,next)=>{
+	if(req.userInfo.isAdmin){
+		next()
+	}else{
+		res.send('<h1>请用管理员账号登录</h1>');
+	}
+})
+*/
 // 注册用户
 router.post('/register',(req,res)=>{
 	console.log(req.body);
@@ -95,6 +104,7 @@ router.post('/login',(req,res)=>{
 		}
 	})
 })
+
 
 // 退出
 router.get('/logout',(req,res)=>{

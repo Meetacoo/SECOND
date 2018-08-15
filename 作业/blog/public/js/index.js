@@ -19,111 +19,110 @@
 	})*/
  
 	// 验证
-	function check(){
-		// 验证的正则
-		var usernameReg = /^[a-z][a-z|0-9|_]{1,9}$/i;
-		var passwordReg = /^\w{6,10}$/;
-		// 用户注册
-		$('.register-btn').on('click',()=>{
-			var username = $('#register-username').val();
-			var password = $('#register-password').val();
-			var repassword = $('#repassword').val();
-			var errmsg = '';
-			// console.log(username);
-			// 首字母，可有数字下划线，2-10个字符
-			if (!usernameReg.test(username)) {
-				errmsg = '首字母，可有数字下划线，2-10个字符';
-				// console.log('首字母，可有数字下划线，2-10个字符');
-			}
-			// 密码6-10个字符
-			else if (!passwordReg.test(password)) {
-				errmsg = '6-10个字符';
-				// console.log('6-10个字符');
-			}
-			else if (password != repassword) {
-				errmsg = '密码不等';
-				// console.log('密码不等');
-			}
-			else {
-				// console.log('right');
-			}
+	// 验证的正则
+	var usernameReg = /^[a-z][a-z|0-9|_]{1,9}$/i;
+	var passwordReg = /^\w{6,10}$/;
+	// 用户注册
+	$('.register-btn').on('click',()=>{
+		var username = $('#register-username').val();
+		var password = $('#register-password').val();
+		var repassword = $('#repassword').val();
+		var errmsg = '';
+		// console.log(username);
+		// 首字母，可有数字下划线，2-10个字符
+		if (!usernameReg.test(username)) {
+			errmsg = '首字母，可有数字下划线，2-10个字符';
+			// console.log('首字母，可有数字下划线，2-10个字符');
+		}
+		// 密码6-10个字符
+		else if (!passwordReg.test(password)) {
+			errmsg = '6-10个字符';
+			// console.log('6-10个字符');
+		}
+		else if (password != repassword) {
+			errmsg = '密码不等';
+			// console.log('密码不等');
+		}
+		else {
+			// console.log('right');
+		}
 
-			if (errmsg) {
-				$register.find('.err').html(errmsg);
-				return;
-			} else {
-				$register.find('.err').html('');
-				$.ajax({
-					url:'/user/register',
-					type:'POST',
-					dataType:'json',
-					data:{
-						username:username,
-						password:password
-					}
-				})
-				.done((result)=>{
-					if (result.code === 0) {
-						$('#login').trigger('click');
-					} else {
-						$register.find('.err').html(result.message);
-					}
-				})
-				.fail((err)=>{
-					console.log(err);
-				})
-			}
-		})
+		if (errmsg) {
+			$register.find('.err').html(errmsg);
+			return;
+		} else {
+			$register.find('.err').html('');
+			$.ajax({
+				url:'/user/register',
+				type:'POST',
+				dataType:'json',
+				data:{
+					username:username,
+					password:password
+				}
+			})
+			.done((result)=>{
+				if (result.code === 0) {
+					$('#login').trigger('click');
+				} else {
+					$register.find('.err').html(result.message);
+				}
+			})
+			.fail((err)=>{
+				console.log(err);
+			})
+		}
+	})
 
-		// 用户登录
-		$('.sub-btn').on('click',()=>{
-			var username = $('#username').val();
-			var password = $('#password').val();
-			var errmsg = '';
-			// console.log(username);
-			// 首字母，可有数字下划线，2-10个字符
-			if (!usernameReg.test(username)) {
-				errmsg = '首字母，可有数字下划线，2-10个字符';
-				// console.log('首字母，可有数字下划线，2-10个字符');
-			}
-			// 密码6-10个字符
-			else if (!passwordReg.test(password)) {
-				errmsg = '6-10个字符';
-				// console.log('6-10个字符');
-			}
-			else {
-				console.log('right');
-			}
+	// 用户登录
+	$('.sub-btn').on('click',()=>{
+		var username = $('#username').val();
+		var password = $('#password').val();
+		var errmsg = '';
+		// console.log(username);
+		// 首字母，可有数字下划线，2-10个字符
+		if (!usernameReg.test(username)) {
+			errmsg = '首字母，可有数字下划线，2-10个字符';
+			// console.log('首字母，可有数字下划线，2-10个字符');
+		}
+		// 密码6-10个字符
+		else if (!passwordReg.test(password)) {
+			errmsg = '6-10个字符';
+			// console.log('6-10个字符');
+		}
+		else {
+			console.log('right');
+		}
 
-			if (errmsg) {
-				$login.find('.err').html(errmsg);
-				return;
-			} else {
-				$login.find('.err').html('');
-				$.ajax({
-					url:'/user/login',
-					type:'POST',
-					dataType:'json',
-					data:{
-						username:username,
-						password:password
-					}
-				})
-				.done((result)=>{
-					// console.log(result)
-					if (result.code === 0) {
-						window.location.reload();
-					} else {
-						$login.find('.err').html(result.message);
-					}
-				})
-				.fail((err)=>{
-					console.log(err);
-				})
-			}
-		})
-	}
-
+		if (errmsg) {
+			$login.find('.err').html(errmsg);
+			return;
+		} else {
+			$login.find('.err').html('');
+			$.ajax({
+				url:'/user/login',
+				type:'POST',
+				dataType:'json',
+				data:{
+					username:username,
+					password:password
+				}
+			})
+			.done((result)=>{
+				// console.log(result)
+				if (result.code === 0) {
+					window.location.reload();
+				} else {
+					$login.find('.err').html(result.message);
+				}
+			})
+			.fail((err)=>{
+				console.log(err);
+			})
+		}
+	})
+	
+	// 用户退出
 	$('#logout').on('click',()=>{
 		$.ajax({
 			url:'/user/logout',
@@ -140,8 +139,23 @@
 		})
 	})
 
-	check();
-
+/*	// 用户找回密码
+	$('#resub-btn').on('click',()=>{
+		$.ajax({
+			url:'/user/repassword',
+			dataType:'json',
+			type:'get'
+		})
+		.done((result)=>{
+			if (result.code === 0) {
+				window.location.reload();
+			}
+		})
+		.fail((err)=>{
+			console.log(err);
+		})
+	})
+*/
 
 	//发送文章列表的请求
 	var $articlePage = $('#article-page');

@@ -53,6 +53,7 @@ router.get('/',(req,res)=>{
 				pages:pageData.pages,
 				categories:data.categories,
 				topArticles:data.topArticles,
+				site:data.site,
 				url:'/articles'
 			});				
 		})

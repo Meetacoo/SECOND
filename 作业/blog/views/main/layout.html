@@ -19,7 +19,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="javascript:;">个人博客</a>
+				<a class="navbar-brand" href="javascript:;">{{ site.name }}</a>
 			</div>
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
@@ -46,6 +46,7 @@
 				{% else %}
 				<li class="active"><a href="/">首页</a></li>
 				{% endif %}
+
 				{% for cate in categories %}
 		        	{% if cate._id.toString() == category  %}
 					<li class="active"><a href="/list/{{ cate._id.toString() }}">{{ cate.name }}</a></li>
@@ -62,6 +63,11 @@
 			<div class="row">
 				<div class="col-md-8">
 					{% block content %}{% endblock %}
+					<footer>
+						<p class="col-sm-offset-6">
+							Blog Design by <a href="#">Kuazhu</a> <a href="#">豫ICP备11002373号-1</a>.
+						</p>
+					</footer>
 				</div>
 				<div class="col-md-4  hidden-xs hidden-sm">
 					{% if userInfo._id %}
@@ -72,7 +78,7 @@
 							{% if userInfo.isAdmin %}
 							<a href="/admin" class="link col-sm-offset-2"">进入管理中心</a>
 							{% else %}
-							<a href="/center" class="link col-sm-offset-2">进入用户中心</a>
+							<a href="/home" class="link col-sm-offset-2">进入用户中心</a>
 							{% endif %}
 							<a href="javascript:;" class="link col-sm-offset-2" id="logout">退出</a>
 							<p class="err col-sm-offset-2 text-danger"></p>
@@ -127,20 +133,18 @@
 							</div>
 						</div>
 						<div class="form-group change">
-							<a href="jsvascript:;" class="link col-sm-offset-4 col-sm-6" id="register">免费注册</a>
+							<a href="jsvascript:;" class="link col-sm-offset-2 col-sm-4" id="register">免费注册</a>
+							<a href="jsvascript:;" class="link col-sm-4" id="forget">忘记密码？</a>
 						</div>
 						<p class="err col-sm-offset-2 text-danger"></p>
 					</div>
+					{% for ad in site.ads %}
 					<div class="ad">
-						<a href="#" class="thumbnail">
-							<img src="/img/l-1.jpg" class="img-responsive" alt="Responsive image">
+						<a href="{{ ad.url }}" class="thumbnail" target="_blank">
+							<img src="{{ ad.path }}" class="img-responsive" alt="Responsive image">
 						</a>
 					</div>
-					<div class="ad">
-						<a href="#" class="thumbnail">
-							<img src="/img/l-2.jpg" class="img-responsive" alt="Responsive image">
-						</a>
-					</div>
+					{% endfor %}
 					<div class="panel panel-default about-self">
 						<div class="panel-heading" id="panel-heading">
 							<h3 class="panel-title">博主介绍</h3>
@@ -148,12 +152,12 @@
 						<div class="media">
 							<div class="media-left">
 								<a href="#" class="media-link">
-									<img class="media-object self-img img-circle" src="/img/l-2.jpg" alt="l-2.jpg">
+									<img class="media-object self-img img-circle" src="{{ site.author.image }}" alt="me.jpg">
 								</a>
 							</div>
 							<div class="media-body">
-								<h4 class="media-heading">Metara</h4>
-								<p>通知要求各单位落实高温津贴，将所需经费纳入市、区财政预算;完善环卫休息场所内配套设施，配备饮水设备，采取防暑降温措施。</p>
+								<h4 class="media-heading">{{ site.author.name }}</h4>
+								<p>{{ site.author.intro }}</p>
 							</div>
 						</div>
 					</div>
@@ -175,7 +179,7 @@
 						<h3 class="panel-title">关注我</h3>
 						</div>
 							<div class="panel-body">
-								<img src="/img/l-2.jpg" class="img-responsive" alt="">
+								<img src="{{ site.author.wechat }}" class="img-responsive" alt="">
 							</div>
 						</div>
 					</div>
@@ -183,11 +187,7 @@
 			</div>
 		</div>
 	</div>
-	<footer>
-		<p>
-			Blog Design by <a href="#">Kuazhu</a> <a href="#">豫ICP备11002373号-1</a>.
-		</p>
-	</footer>
+	
 </body>
 <script src="/jquery/jquery-1.12.4.js"></script>
 <script src="/lib/js/bootstrap.min.js"></script>

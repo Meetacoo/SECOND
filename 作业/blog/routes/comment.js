@@ -4,6 +4,13 @@ const articleModel = require('../models/article.js')
 
 const router = Router(); 
 
+router.use((req,res,next)=>{
+	if (req.userInfo.isAdmin) {
+		next();
+	}else{
+		res.send('<h1>请用管理员账号登录</h1>');
+	}
+})
 // 添加评论
 router.post('/add',(req,res)=>{
 	let body = req.body;

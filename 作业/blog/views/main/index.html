@@ -5,22 +5,35 @@
 	<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
 		<!-- Indicators -->
 		<ol class="carousel-indicators">
-			<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+			{% for carousel in site.carouseles %}
+			{% if loop.index0 == 0 %}
+			<li data-target="#carousel-e
+			xample-generic" data-slide-to="0" class="active"></li>
+			{% else %}
 			<li data-target="#carousel-example-generic" data-slide-to="1"></li>
+			{% endif %}
+		{% endfor %}
 		</ol>
 
 		<!-- Wrapper for slides -->
 		<div class="carousel-inner" role="listbox">
+		{% for carousel in site.carouseles %}
+		{% if loop.index0 == 0 %}
 			<div class="item active">
-				<img src="/img/lunbo1.jpg" alt="...">
-				<div class="carousel-caption">
-				</div>
+				<a href="{{ carousel.url }}" target="_blank">
+					<img src="{{ carousel.path }}" alt="{{ carousel.path }}">
+				</a>
+				<!-- <div class="carousel-caption">
+				</div> -->
 			</div>
+			{% else %}
 			<div class="item">
-				<img src="/img/lunbo2.jpg" alt="...">
-				<div class="carousel-caption">
-				</div>
+				<a href="{{ carousel.url }}" target="_blank">
+					<img src="{{ carousel.path }}" alt="{{ carousel.path }}">
+				</a>
 			</div>
+			{% endif %}
+			{% endfor %}
 		</div>
 
 		<!-- Controls -->
@@ -33,7 +46,7 @@
 			<span class="sr-only">Next</span>
 		</a>
 	</div>
-	<div id='article-list'>
+	<!-- <div id='article-list'>
 	{% for article in articles %}
 	<div class="panel panel-default content-item">
 	  <div class="panel-heading">
@@ -65,27 +78,9 @@
 	</div>
 	{% endfor %}
 	</div>
-
+	
 	<nav aria-label="Page navigation" id="article-page" data-url="/articles" data-id="{{ category }}">
 		{% include './pagination.html' %}
-	  <!-- <ul class="pagination">
-	    <li>
-	      <a href="javascript:;" aria-label="Previous">
-	        <span aria-hidden="true">&laquo;</span>
-	      </a>
-	    </li>
-	    {% for i in list%}
-	    {% if i == page %}
-	    <li class="active"><a href="javascript:;">{{ i }}</a></li>
-	    {% else %}
-	    <li><a href="javascript:;">{{ i }}</a></li>
-	    {% endif %}
-	    {% endfor %}
-	    <li>
-	      <a href="javascript:;" aria-label="Next">
-	        <span aria-hidden="true">&raquo;</span>
-	      </a>
-	    </li>
-	  </ul> -->
-	</nav>
+	</nav> -->
+	{% include './article_list.html' %}
 {% endblock %}

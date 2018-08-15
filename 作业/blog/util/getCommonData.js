@@ -1,5 +1,7 @@
 const categoryModel = require('../models/category.js');
 const articleModel = require('../models/article.js');
+const fs = require('fs');
+const path = require('path');
 /*
 获取前台共通数据
 */
@@ -13,10 +15,19 @@ let getCommonData = ()=>{
 			.sort({click:-1})
 			.limit(10)
 			.then(topArticles=>{
-				resolve({
-					categories:categories,
-					topArticles:topArticles
+				let filePath = path.normalize(__dirname + '/../site-info.json');
+				fs.readFile(filePath,(err,data)=>{
+					let site = {};
+					if(!err){
+						site = JSON.parse(data);
+					}
+					resolve({
+						categories:categories,
+						topArticles:topArticles,
+						site:site
+					})
 				})
+				
 			})
 		})
 	});
