@@ -11,4 +11,4 @@ class App extends React.Component{
 
 
 // 导出组件 ==  module.exports = App
-export default A
+export default App;
