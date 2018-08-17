@@ -162,7 +162,9 @@
 	$articlePage.on('get-data',function(err,result){
 		// console.log(result);
 		buildArticleList(result.data.docs);
-		buildPage($articlePage,result.data.list,result.data.page)
+		if (result.data.pages >1) {
+			buildPage($articlePage,result.data.list,result.data.page)
+		}
 	})
 	$articlePage.pagination();
 	/*$('#page').on('click','a',function(){
@@ -318,10 +320,10 @@
 
 	//发送文章列表的请求
 	$commentPage.on('get-data',function(err,result){
-		if (result.data.pages) {
-			buildCommentList(result.data.docs);
+		buildCommentList(result.data.docs);
+		if (result.data.pages)  {
+			buildPage($commentPage,result.data.list,result.data.page)
 		}
-		buildPage($commentPage,result.data.list,result.data.page)
 	})
 	$commentPage.pagination();
 })(jQuery)

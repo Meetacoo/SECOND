@@ -101,7 +101,7 @@ router.get('/delete/:id',(req,res)=>{
 	.then(resource=>{
 		// console.log(resource);
 		let filePath = path.normalize(__dirname+'/../public/'+resource.path);
-		console.log(filePath);
+		// console.log(filePath);
 		// 删除物理文件
 		fs.unlink(filePath,(err)=>{
 			if (!err) {
