@@ -7,7 +7,7 @@ class Item extends Component {
 	}
 	render() {
 		return (
-			<li onClick={this.handleDel}>
+			<li onClick={this.handleDel.bind(this)}>
 				{this.props.content}
 			</li>
 		)

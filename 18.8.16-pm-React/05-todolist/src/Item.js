@@ -1,4 +1,5 @@
 import React,{ Component } from 'react';
+import PropTypes from 'prop-types'
 class Item extends Component {
 	constructor(props){
 		super(props);
@@ -19,4 +20,5 @@ class Item extends Component {
 		)
 	}
 }
+
 export default Item;
