@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Item from './Item';
 import Test from './Test';
+import axios from 'axios';
 import './App.css'
 
 class App extends Component {
@@ -8,11 +9,58 @@ class App extends Component {
 		super(props);
 		this.state = {
 			value:'',
-			list:['one','two']
+			list:['onea','twoa']
 		}
 		this.handleAdd = this.handleAdd.bind(this);
 		this.handleChange = this.handleChange.bind(this);
 		this.handleDel = this.handleDel.bind(this);
+	}
+	/*static getDerivedStateFromProps(nextProps, prevState){
+		console.log('App getDerivedStateFromProps',nextProps, prevState)
+	
+		return {
+			list:['bb','cc']
+		}
+	
+		if(prevState.value == 1){
+			return {
+				list:['111']
+			}			
+		}else{
+			return {
+				list:['bb','cc']
+			}			
+		}
+	}
+	*/
+	/*
+	shouldComponentUpdate(nextProps, nextState){
+		console.log('App shouldComponentUpdate',nextProps, nextState)
+		return true;
+	}
+	getSnapshotBeforeUpdate(prevProps, prevState){
+		console.log('App getSnapshotBeforeUpdate',prevProps, prevState)
+		return 111;
+	}
+	componentDidUpdate(prevProps, prevState,snapshot){
+		console.log('App componentDidUpdate',prevProps, prevState,snapshot)
+	}
+	componentDidMount(){
+		console.log('App componentDidMount')
+	}*/
+	componentDidMount(){
+		// console.log('componentDidMount')
+		axios
+		.get('http://127.0.0.1:8060/api/getData')
+		.then((data)=>{
+			console.log(data);
+			this.setState({
+				list:data.data
+			})
+		})
+		.catch((err)=>{
+			console.log(err);
+		})
 	}
 	handleAdd(){
 		console.log(this.state);
@@ -45,7 +93,7 @@ class App extends Component {
 
 	getItems(){
 		return this.state.list.map((item,index)=>{
-			return (	
+			return (	 
 				<Item 
 					key={index} 
 					content={item} 
@@ -57,7 +105,7 @@ class App extends Component {
 		})
 	}
 	render() {
-		console.log('render')
+		// console.log('render')
 		return (
 			<div className="box">
 				<input 
@@ -65,13 +113,13 @@ class App extends Component {
 					onChange={this.handleChange} 
 					ref={(input)=>{
 						this.input = input;
-						console.log("input:::",input)
+						// console.log("input:::",input)
 					}}
 				/>
 				<button onClick={this.handleAdd} >提交</button>
 				<ul ref={(ul)=>{
 					this.ul = ul;
-					console.log("ul:::",ul)
+					// console.log("ul:::",ul)
 				}}>
 					{
 						this.getItems()
