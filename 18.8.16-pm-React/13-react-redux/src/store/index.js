@@ -11,12 +11,12 @@ import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import reducer from './reducer.js';
 
-const arr = [thunk];
-if (process.env.NODE_ENV != 'production') {
+const middleWare = [thunk];
+if (process.env.NODE_ENV !== 'production') {
 	const logger = createLogger({});
-	arr.push(logger)
+	middleWare.push(logger)
 }
 
 // const store = createStore(reducer,applyMiddleware(thunk,logger))
-const store = createStore(reducer,applyMiddleware(...arr))
-export default store
+const store = createStore(reducer,applyMiddleware(...middleWare))
+export default store;
