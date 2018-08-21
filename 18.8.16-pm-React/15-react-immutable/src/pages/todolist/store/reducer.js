@@ -33,7 +33,7 @@ export default function(state = defaultState,action){
 		return state.merge({
 			value:'',
 			list:newList
-		});
+		}); 
 	}
 	if (action.type === types.DEL_ITEM) {
 		/*const newState = JSON.parse(JSON.stringify(state));
